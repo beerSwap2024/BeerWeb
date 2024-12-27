@@ -9,21 +9,41 @@
 <body>
     <h1>Beer Score Tracker</h1>
 
-    <button id="accessButton" onclick="showPasswordPrompt()">Access Beer Scoring</button>
+    <!-- Access Button for Viewing Results -->
+    <button id="accessButton" onclick="showPasswordPrompt()">View Results</button>
 
+    <!-- Password Prompt -->
     <div id="passwordPrompt" style="display:none;">
         <input type="password" id="passwordInput" placeholder="Enter Password">
         <button onclick="checkPassword()">Submit</button>
         <p id="errorMessage" style="color:red; display:none;">Incorrect password. Try again.</p>
     </div>
 
-    <div id="scoreForm" style="display:none;">
+    <!-- Score Input Form -->
+    <div id="scoreForm">
         <h2>Enter Beer Scores</h2>
-        <label for="beer1">Beer 1 Taste Score:</label>
-        <input type="number" id="beer1" min="0" max="10"><br>
-        <label for="beer2">Beer 2 Creativity Score:</label>
-        <input type="number" id="beer2" min="0" max="10"><br>
-        <button onclick="calculateTotal()">Submit Scores</button>
+        
+        <!-- Dropdown to Select Beer -->
+        <label for="beerSelection">Select Beer:</label>
+        <select id="beerSelection">
+            <option value="beer1">Beer 1</option>
+            <option value="beer2">Beer 2</option>
+            <option value="beer3">Beer 3</option>
+        </select><br>
+
+        <label for="tasteScore">Taste Score (0-10):</label>
+        <input type="number" id="tasteScore" min="0" max="10"><br>
+
+        <label for="creativityScore">Creativity Score (0-10):</label>
+        <input type="number" id="creativityScore" min="0" max="10"><br>
+
+        <button onclick="submitScores()">Submit Scores</button>
+    </div>
+
+    <!-- Results Section (Initially Hidden) -->
+    <div id="resultSection" style="display:none;">
+        <h3>Scores for Each Beer:</h3>
+        <ul id="scoreList"></ul>
         <h3>Total Score: <span id="totalScore">0</span></h3>
     </div>
 
