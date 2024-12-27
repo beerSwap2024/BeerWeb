@@ -1,12 +1,15 @@
 // Store scores for each beer in an object
 let beerScores = {
-    beer1: { taste: 0, creativity: 0 },
-    beer2: { taste: 0, creativity: 0 },
-    beer3: { taste: 0, creativity: 0 }
+    beer1: { taste: 0, creativity: 0, total: 0 },
+    beer2: { taste: 0, creativity: 0, total: 0 },
+    beer3: { taste: 0, creativity: 0, total: 0 }
 };
 
-// Store total score
-let totalScore = 0;
+// Retrieve stored scores from localStorage if they exist
+const storedScores = localStorage.getItem('beerScores');
+if (storedScores) {
+    beerScores = JSON.parse(storedScores);
+}
 
 // Function to show password prompt for accessing the results
 function showPasswordPrompt() {
@@ -35,6 +38,10 @@ function submitScores() {
     // Update the scores for the selected beer
     beerScores[selectedBeer].taste = tasteScore;
     beerScores[selectedBeer].creativity = creativityScore;
+    beerScores[selectedBeer].total = tasteScore + creativityScore; // Calculate total for the beer
+
+    // Save the updated scores to localStorage
+    localStorage.setItem('beerScores', JSON.stringify(beerScores));
 
     // Clear input fields after submission
     document.getElementById("tasteScore").value = "";
@@ -43,24 +50,26 @@ function submitScores() {
     alert("Scores submitted for " + selectedBeer);
 }
 
-// Function to display the results
+// Function to display the results (taste, creativity, and total points for each beer)
 function displayResults() {
-    // Calculate total score by adding up all beer scores
-    totalScore = 0;
-    for (let beer in beerScores) {
-        totalScore += beerScores[beer].taste + beerScores[beer].creativity;
-    }
-
-    // Display the individual beer scores
+    // Display the scores for each beer
     const scoreList = document.getElementById("scoreList");
     scoreList.innerHTML = "";  // Clear previous list
+    let grandTotal = 0;
+
     for (let beer in beerScores) {
         const li = document.createElement("li");
-        li.textContent = `${beer}: Taste - ${beerScores[beer].taste}, Creativity - ${beerScores[beer].creativity}`;
+        li.innerHTML = `
+            <strong>${beer}</strong><br>
+            Taste Points: ${beerScores[beer].taste}<br>
+            Creativity Points: ${beerScores[beer].creativity}<br>
+            Total Points: ${beerScores[beer].total}<br><br>
+        `;
         scoreList.appendChild(li);
+        grandTotal += beerScores[beer].total;
     }
 
     // Display the total score
-    document.getElementById("totalScore").textContent = totalScore;
+    document.getElementById("totalScore").textContent = grandTotal;
     document.getElementById("resultSection").style.display = "block";
 }
