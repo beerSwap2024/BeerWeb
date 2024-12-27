@@ -1,0 +1,18 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+}
+
+button {
+    padding: 10px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+#scoreForm {
+    margin-top: 20px;
+}
+
+input[type="number"] {
+    margin-bottom: 10px;
+}
